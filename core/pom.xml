@@ -35,6 +35,12 @@
 
     <dependencies>
 
+        <!-- Kotlin -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+        </dependency>
+
         <!-- Functional goodness -->
         <dependency>
             <groupId>io.vavr</groupId>
@@ -83,6 +89,12 @@
 
     <build>
         <plugins>
+
+            <!-- Kotlin (compiles before Java) -->
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+            </plugin>
 
             <!-- Generate xml deserialized classes for config models (Civilizations, techs, etc) -->
             <plugin>

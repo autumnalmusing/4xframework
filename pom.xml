@@ -51,6 +51,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <kotlin.version>1.9.24</kotlin.version>
         <vavr.version>1.0.0-alpha-3</vavr.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <slf4j.version>1.7.32</slf4j.version>
@@ -68,6 +69,40 @@
 
         <pluginManagement>
             <plugins>
+                <!-- Kotlin: compile before Java so both can interoperate -->
+                <plugin>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>compile</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <sourceDirs>
+                                    <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                                    <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                                </sourceDirs>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>test-compile</id>
+                            <phase>test-process-test-sources</phase>
+                            <goals>
+                                <goal>test-compile</goal>
+                            </goals>
+                            <configuration>
+                                <sourceDirs>
+                                    <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                    <sourceDir>${project.basedir}/src/test/java</sourceDir>
+                                </sourceDirs>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- License plugin configuration for all modules under the GPL3-only -->
                 <plugin>
                     <groupId>com.mycila</groupId>
@@ -184,6 +219,13 @@
                 <groupId>com.google.dagger</groupId>
                 <artifactId>dagger</artifactId>
                 <version>${dagger.version}</version>
+            </dependency>
+
+            <!-- Kotlin -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
             </dependency>
 
         </dependencies>
